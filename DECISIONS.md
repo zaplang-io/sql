@@ -17,14 +17,14 @@ migrations layer. Where SQLAlchemy's Core and ORM surfaces differ, the Core
 surface is the Phase 1 reference. Deviations are recorded below, keyed to the
 issue that introduces them.
 
-## Phasing (owned by epic [#1](https://github.com/zaplang-io/sql/issues/1))
+## Phasing (owned by epic [#2](https://github.com/zaplang-io/sql/issues/2))
 
 The charter is delivered in three phases — **Core** → **ORM** → **migrations**.
 The first slice is Phase 1 (Core) only: engine/connection + driver abstraction
-([#3](https://github.com/zaplang-io/sql/issues/3)), the SQL expression/query
-builder ([#4](https://github.com/zaplang-io/sql/issues/4)), and result handling
-([#5](https://github.com/zaplang-io/sql/issues/5)), all pinned by a docs-first
-surface spec ([#2](https://github.com/zaplang-io/sql/issues/2)). ORM and
+([#4](https://github.com/zaplang-io/sql/issues/4)), the SQL expression/query
+builder ([#5](https://github.com/zaplang-io/sql/issues/5)), and result handling
+([#6](https://github.com/zaplang-io/sql/issues/6)), all pinned by a docs-first
+surface spec ([#3](https://github.com/zaplang-io/sql/issues/3)). ORM and
 migrations are named in the epic but not filed until Phase 1 is in hand.
 
 ## Forced divergences from Python (static typing)
@@ -32,7 +32,7 @@ migrations are named in the epic but not filed until Phase 1 is in hand.
 Zap is statically typed, so the surface cannot match SQLAlchemy 1:1. The
 following are decided by the language and recorded now; a user-facing
 "differences from SQLAlchemy" note lands with the surface
-([#2](https://github.com/zaplang-io/sql/issues/2)):
+([#3](https://github.com/zaplang-io/sql/issues/3)):
 
 - **No untyped `Any` for cell values.** A result cell is modeled over a closed
   `SqlValue` sum type (null / integer / float / text / blob / bool / the date-time
@@ -53,14 +53,14 @@ following are decided by the language and recorded now; a user-facing
   stdlib types, and SQL numeric/decimal onto Zap's numeric model (64-bit signed
   integers, IEEE-754 binary64 floats, an explicit decimal type), recorded rather
   than hidden. The exact mapping is pinned in
-  [#2](https://github.com/zaplang-io/sql/issues/2) and
-  [#5](https://github.com/zaplang-io/sql/issues/5).
+  [#3](https://github.com/zaplang-io/sql/issues/3) and
+  [#6](https://github.com/zaplang-io/sql/issues/6).
 - **Deferred keyword-arg ergonomics.** SQLAlchemy's deep keyword surface
   (`create_engine(...)` pool/echo options, `select(...).options(...)`, etc.) is
   trimmed to the minimum in the first slice; which options become keyword args
   later is a separate decision.
 
-## Open decisions (owned by the surface sub-issue [#2](https://github.com/zaplang-io/sql/issues/2))
+## Open decisions (owned by the surface sub-issue [#3](https://github.com/zaplang-io/sql/issues/3))
 
 - **How column operators build the predicate tree.** SQLAlchemy writes
   `users.c.age >= 18` and relies on Python operator overloading so `>=` returns a
@@ -71,16 +71,16 @@ following are decided by the language and recorded now; a user-facing
   pursue operator overloading for parity; fall back to methods only if the
   language cannot express it. If it cannot, that is a core language gap — it is
   filed in `zaplang-io/zap`, linked here, and the query-builder sub-issue
-  ([#4](https://github.com/zaplang-io/sql/issues/4)) blocks on it. No workaround
+  ([#5](https://github.com/zaplang-io/sql/issues/5)) blocks on it. No workaround
   is built around the gap (language-first rule).
 - **Result-row access shape.** By name (`row["id"]`), by position (`row[0]`),
   and/or by a typed accessor. SQLAlchemy offers mapping-style and tuple-style
-  access on `Row`. #2 confirms which Zap can express (indexed get overload on a
-  user `Row` type) and #5 implements it; an un-expressible form becomes a core
+  access on `Row`. #3 confirms which Zap can express (indexed get overload on a
+  user `Row` type) and #6 implements it; an un-expressible form becomes a core
   gap filed upstream.
 - **Connection lifecycle / context manager.** Whether `engine.connect()` returns
   a value usable in a `with` block (scoped close), matching SQLAlchemy's
-  `with engine.connect() as conn:`. #2/#3 confirm against the language's
+  `with engine.connect() as conn:`. #3/#4 confirm against the language's
   context-manager support.
 
 ## Trust boundary

@@ -6,7 +6,7 @@ SQL toolkit, ORM, and schema migrations for [Zap](https://github.com/zaplang-io/
 - Contributor & agent conventions: [AGENTS.md](AGENTS.md)
 - Design decisions: [DECISIONS.md](DECISIONS.md)
 
-This is the entry point to the Zap database ecosystem. It is large and strategic, so it ships in **three phases**. The [Tier-1 epic](https://github.com/zaplang-io/sql/issues/1) tracks the whole plan; the first-slice sub-issues ([#2](https://github.com/zaplang-io/sql/issues/2)–[#5](https://github.com/zaplang-io/sql/issues/5)) scope **Phase 1 (Core) only**. No library code has landed yet.
+This is the entry point to the Zap database ecosystem. It is large and strategic, so it ships in **three phases**. The [Tier-1 epic](https://github.com/zaplang-io/sql/issues/2) tracks the whole plan; the first-slice sub-issues ([#3](https://github.com/zaplang-io/sql/issues/3)–[#6](https://github.com/zaplang-io/sql/issues/6)) scope **Phase 1 (Core) only**. No library code has landed yet.
 
 ## Goals
 
@@ -18,7 +18,7 @@ Core is pure-Zap and dialect-neutral; it talks to databases through per-engine d
 
 The charter (SQLAlchemy Core + ORM + Alembic-style migrations) is too large for one slice, so it is delivered in order:
 
-- **Phase 1 — Core** *(first slice; sub-issues [#2](https://github.com/zaplang-io/sql/issues/2)–[#5](https://github.com/zaplang-io/sql/issues/5))*
+- **Phase 1 — Core** *(first slice; sub-issues [#3](https://github.com/zaplang-io/sql/issues/3)–[#6](https://github.com/zaplang-io/sql/issues/6))*
   - Engine / connection + a DBAPI-style driver abstraction.
   - SQL expression language / query builder — `select` / `insert` / `update` / `delete`, `where`, joins, ordering.
   - Result handling — typed rows, column access, type coercion.
@@ -31,7 +31,7 @@ Phase 2 and Phase 3 sub-issues are **deferred** — enumerated in the epic, file
 
 ## Planned public surface (Phase 1 — Core)
 
-The exact signatures (keyword vs positional, defaults, return shapes) are **not final**; this sketch is pinned in step with epic [#1](https://github.com/zaplang-io/sql/issues/1) / surface sub-issue [#2](https://github.com/zaplang-io/sql/issues/2). The SQLAlchemy-Core equivalent is named for each piece.
+The exact signatures (keyword vs positional, defaults, return shapes) are **not final**; this sketch is pinned in step with epic [#2](https://github.com/zaplang-io/sql/issues/2) / surface sub-issue [#3](https://github.com/zaplang-io/sql/issues/3). The SQLAlchemy-Core equivalent is named for each piece.
 
 ```zap
 import sql
